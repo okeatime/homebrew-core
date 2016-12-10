@@ -165,7 +165,7 @@ class Qt5 < Formula
     end
 
     system "./configure", *args
-    system "make"
+    system "make", "-j4"
     ENV.j1
     system "make", "install"
 

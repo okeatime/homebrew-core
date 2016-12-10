@@ -61,13 +61,21 @@ class Qt5 < Formula
       url "https://raw.githubusercontent.com/Homebrew/formula-patches/9635ead/qt5/widget-examples.patch"
       sha256 "f26819135bae1456abd7323e4f40cd83dd11fc46da055a24ae24511ac988b329"
     end
+
+    # QSetting on Sierra bug fix
+    patch do
+      url "https://gist.githubusercontent.com/okeatime/1eeed809506829d4baaee814029b2198/raw/bc8e11b966ace08a0760c93b8ab04d406a696373/qsettings.patch"
+      sha256 "c3f9c154402bd41392be9a8e6a8fd51228b0bc591449bd9bc1722609a524667c"
+    end
+
+    # macdeployqt bug fix
+    patch do
+      url "https://gist.githubusercontent.com/okeatime/dc2f7dabd9321e8b57cdb27a096e4058/raw/72dc3618423b1e9876d3d4b94412f977b9a2f33e/macdeployqt.patch"
+      sha256 "afe0fa9fb88ee06c4df3338ff81a204e0c0840c9b116cd3c99ee1d7ea195dba4"
+    end
   end
 
   bottle do
-    rebuild 3
-    sha256 "242197dfab9e62df340ef9f82d061005ec9c73ccf08f8d54345eea0dda8a4af0" => :sierra
-    sha256 "14b78a048c833306509457401bb186679b88e5311c4fe33deb3417222064c64d" => :el_capitan
-    sha256 "1bbdf366e87a2fb8adb4f657a384b9dd8851149c06c23be870838abd24433991" => :yosemite
   end
 
   keg_only "Qt 5 conflicts Qt 4"
@@ -123,7 +131,13 @@ class Qt5 < Formula
       -nomake tests
       -no-rpath
       -pkg-config
+      -skip qt3d -skip qtactiveqt -skip qtandroidextras -skip qtcanvas3d -skip qtdeclarative -skip qtdoc -skip qtgraphicaleffects -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtmultimedia -skip qtquickcontrols -skip qtscript -skip qtsensors -skip qtserialport -skip qtsvg -skip qtwayland -skip qtwebchannel -skip qtwebsockets -skip qtwinextras -skip qtx11extras -skip qtxmlpatterns -skip qtwebview -skip qtwebengine -skip qtconnectivity
     ]
+
+    args << "-openssl-linked" << "-no-securetransport"
+    openssl_opt = Formula["openssl"].opt_prefix
+    args << "-I#{openssl_opt}/include"
+    ENV["OPENSSL_LIBS"] = "-L#{openssl_opt}/lib -lssl -lcrypto"
 
     args << "-nomake" << "examples" if build.without? "examples"
 

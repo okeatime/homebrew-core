@@ -1,35 +1,30 @@
 class KubernetesCli < Formula
   desc "Kubernetes command-line interface"
   homepage "http://kubernetes.io/"
-  url "https://github.com/kubernetes/kubernetes/archive/v1.4.6.tar.gz"
-  sha256 "dcbbf24ca664f55e40d539a167143f2e0ea0f3ff40e7df6e25887ca10bb2e185"
+  url "https://github.com/kubernetes/kubernetes/archive/v1.5.0.tar.gz"
+  sha256 "0992af9e13bf756f0fb2abf08cd258631d08103cf833bb62936f09d2d5c60eb3"
   head "https://github.com/kubernetes/kubernetes.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "eff8827a884114a99f33884cd46cd3b72109f5921b3555a17346db715fdbaa3a" => :sierra
-    sha256 "fe8165b68a2a7522932a34315ecd5de327652d8688ce4830fd49ebc1f869dfbb" => :el_capitan
-    sha256 "a286f94b04bfa608735ceb003e75e34cfbd46fb49c379f2486051a64b9d52f47" => :yosemite
+    sha256 "337214c2e6b19db9552ce623ecae350394c728012c58b6bb60c7bcd8afd06c7b" => :sierra
+    sha256 "4ff383f14064886c0b5206614d582842f17cf633e7041c4a5b579904a3eec219" => :el_capitan
+    sha256 "502f1126761078740fa19b10f7561dd6267e88c5311604ee7703c12d90575fb1" => :yosemite
   end
 
   devel do
-    url "https://github.com/kubernetes/kubernetes/archive/v1.5.0-beta.3.tar.gz"
-    sha256 "210a84a0585160cf5947148f7b4c239a62c9b202e3cecbc7b87ef14a8c62042c"
-    version "1.5.0-beta.3"
+    url "https://github.com/kubernetes/kubernetes/archive/v1.5.1-beta.0.tar.gz"
+    sha256 "98582a12d32552694c4974a018b97c9d2e8c072befa5ab464d1d43fd35500b0d"
+    version "1.5.1-beta.0"
   end
 
   depends_on "go" => :build
 
   def install
-    # Patch needed to avoid vendor dependency on github.com/jteeuwen/go-bindata
-    # Build will otherwise fail with missing dep
-    # Raised in https://github.com/kubernetes/kubernetes/issues/34067
-    rm "./test/e2e/framework/gobindata_util.go"
-
     # Race condition still exists in OSX Yosemite
     # Filed issue: https://github.com/kubernetes/kubernetes/issues/34635
     ENV.deparallelize { system "make", "generated_files" }
-    system "make", "kubectl", "GOFLAGS=-v"
+    system "make", "kubectl"
 
     arch = MacOS.prefer_64_bit? ? "amd64" : "x86"
     bin.install "_output/local/bin/darwin/#{arch}/kubectl"

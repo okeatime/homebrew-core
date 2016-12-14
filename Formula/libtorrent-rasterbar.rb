@@ -1,10 +1,11 @@
 class LibtorrentRasterbar < Formula
   desc "C++ bittorrent library by Rasterbar Software"
   homepage "http://www.libtorrent.org/"
-  url "https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_1/libtorrent-rasterbar-1.1.1.tar.gz"
-  sha256 "f70c82367b0980460ef95aff3e117fd4a174477892d529beec434f74d615b31f"
+  url "https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_10/libtorrent-rasterbar-1.0.10.tar.gz"
+  sha256 "a865ceaca8b14acdd7be56d361ce4e64361299647e157ef7b3ac7e2812ca4c3e"
 
   bottle do
+    root_url "http://127.0.0.1"
     cellar :any
     sha256 "4b0ed398e532a66a245996dbac804d031b7234dd189cd774ae2469c0893e9d16" => :sierra
     sha256 "4c2088489e205c1a818584bd5dd325a2b0e3dd54d4aa2ced94263e92d93f063c" => :el_capitan
@@ -12,7 +13,7 @@ class LibtorrentRasterbar < Formula
   end
 
   head do
-    url "https://github.com/arvidn/libtorrent.git"
+    url "https://github.com/arvidn/libtorrent.git", :branch => "RC_1_0"
     depends_on "automake" => :build
     depends_on "autoconf" => :build
     depends_on "libtool" => :build
@@ -31,7 +32,10 @@ class LibtorrentRasterbar < Formula
             "--disable-silent-rules",
             "--enable-encryption",
             "--prefix=#{prefix}",
-            "--with-boost=#{Formula["boost"].opt_prefix}"]
+            "--with-boost=#{Formula["boost"].opt_prefix}",
+            "--with-openssl=#{Formula["openssl"].opt_prefix}"]
+
+    ENV["CXXFLAGS"] = "-std=c++11"
 
     # Build python bindings requires forcing usage of the mt version of boost_python.
     if build.with? "python"
@@ -45,11 +49,14 @@ class LibtorrentRasterbar < Formula
     end
 
     if build.head?
-      system "./bootstrap.sh", *args
+      inreplace "src/Makefile.am", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
+      system "./autotool.sh", *args
     else
-      system "./configure", *args
+      inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
     end
 
+    system "./configure", *args
+    system "make", "-j4"
     system "make", "install"
     libexec.install "examples"
   end

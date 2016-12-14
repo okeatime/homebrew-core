@@ -76,6 +76,11 @@ class Qt5 < Formula
   end
 
   bottle do
+    root_url "http://127.0.0.1"
+    rebuild 3
+    sha256 "487b5bf4ee70e1da38294a350c57ec46069f4b7f2c8a2c3109b482ddb43229d6" => :sierra
+    sha256 "487b5bf4ee70e1da38294a350c57ec46069f4b7f2c8a2c3109b482ddb43229d6" => :el_capitan
+    sha256 "487b5bf4ee70e1da38294a350c57ec46069f4b7f2c8a2c3109b482ddb43229d6" => :yosemite
   end
 
   keg_only "Qt 5 conflicts Qt 4"

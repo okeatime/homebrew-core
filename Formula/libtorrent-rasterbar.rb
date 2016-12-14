@@ -32,10 +32,10 @@ class LibtorrentRasterbar < Formula
             "--disable-silent-rules",
             "--enable-encryption",
             "--prefix=#{prefix}",
-            "--with-boost=#{Formula["boost"].opt_prefix}",
-            "--with-openssl=#{Formula["openssl"].opt_prefix}"]
+            "--with-boost=#{Formula["boost"].opt_prefix}"]
 
-    ENV["CXXFLAGS"] = "-std=c++11"
+    #Enable C++11
+    args << "CXXFLAGS=-std=c++11"
 
     # Build python bindings requires forcing usage of the mt version of boost_python.
     if build.with? "python"
@@ -49,10 +49,7 @@ class LibtorrentRasterbar < Formula
     end
 
     if build.head?
-      inreplace "src/Makefile.am", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
       system "./autotool.sh", *args
-    else
-      inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
     end
 
     system "./configure", *args

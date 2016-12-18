@@ -62,12 +62,6 @@ class Qt5 < Formula
       sha256 "f26819135bae1456abd7323e4f40cd83dd11fc46da055a24ae24511ac988b329"
     end
 
-    # QSetting on Sierra bug fix
-    patch do
-      url "https://gist.githubusercontent.com/okeatime/1eeed809506829d4baaee814029b2198/raw/bc8e11b966ace08a0760c93b8ab04d406a696373/qsettings.patch"
-      sha256 "c3f9c154402bd41392be9a8e6a8fd51228b0bc591449bd9bc1722609a524667c"
-    end
-
     # macdeployqt bug fix
     patch do
       url "https://gist.githubusercontent.com/okeatime/dc2f7dabd9321e8b57cdb27a096e4058/raw/72dc3618423b1e9876d3d4b94412f977b9a2f33e/macdeployqt.patch"

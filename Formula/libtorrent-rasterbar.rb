@@ -5,11 +5,12 @@ class LibtorrentRasterbar < Formula
   sha256 "a865ceaca8b14acdd7be56d361ce4e64361299647e157ef7b3ac7e2812ca4c3e"
 
   bottle do
-    root_url "http://127.0.0.1"
+    root_url "https://builds.shiki.hu"
+    prefix "/homebrew"
     cellar :any
-    sha256 "4b0ed398e532a66a245996dbac804d031b7234dd189cd774ae2469c0893e9d16" => :sierra
-    sha256 "4c2088489e205c1a818584bd5dd325a2b0e3dd54d4aa2ced94263e92d93f063c" => :el_capitan
-    sha256 "b3a8972d68c533a218e622169e67a5d4dd27d30c0bccf0d303805f8e09b8ab3b" => :yosemite
+    sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :sierra
+    sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :el_capitan
+    sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :yosemite
   end
 
   head do

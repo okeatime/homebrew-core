@@ -60,7 +60,6 @@ class Gcc < Formula
   end
 
   fails_with :gcc_4_0
-  fails_with :llvm
 
   # GCC bootstraps itself, so it is OK to have an incompatible C++ stdlib
   cxxstdlib_check :skip
@@ -110,6 +109,8 @@ class Gcc < Formula
       languages << "java" if build.with? "java"
       languages << "jit" if build.with? "jit"
     end
+
+    languages -= ["java"] if build.head?
 
     args = [
       "--build=#{arch}-apple-darwin#{osmajor}",

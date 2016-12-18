@@ -1,14 +1,14 @@
 class Folly < Formula
   desc "Collection of reusable C++ library artifacts developed at Facebook"
   homepage "https://github.com/facebook/folly"
-  url "https://github.com/facebook/folly/archive/v2016.11.28.00.tar.gz"
-  sha256 "5a50f75dcf421bf723fbe8d69dc9e3d1bb9935d3b4d5982fc52f29c029ed8c04"
+  url "https://github.com/facebook/folly/archive/v2016.12.12.00.tar.gz"
+  sha256 "ea96682d14423506136edb51a0a761573f50814c1634eb06f1b5d1ea6038cb44"
   head "https://github.com/facebook/folly.git"
 
   bottle do
     cellar :any
-    sha256 "676698ecb56e087b04f8f9e8d6f2ba243f99d5fa04b4b409595bed3f26167f26" => :sierra
-    sha256 "04d2aaaca40c0f1743647d6a5ef7c527419a903f26d4f9c9f969ab59dcfafcf6" => :el_capitan
+    sha256 "eac9c0ff803ff2a0eff04df3c2a1bd0554ffbee531edba7842265f327d0f6bfe" => :sierra
+    sha256 "f8d93406a168817c5993a161dc82191ae1837e89f367eca95bbe7dae490a0581" => :el_capitan
   end
 
   depends_on "autoconf" => :build
@@ -62,7 +62,8 @@ class Folly < Formula
 
       system "autoreconf", "-fvi"
       system "./configure", "--prefix=#{prefix}", "--disable-silent-rules",
-                            "--disable-dependency-tracking"
+                            "--disable-dependency-tracking",
+                            "--with-jemalloc"
       system "make"
       system "make", "install"
     end

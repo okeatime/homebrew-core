@@ -4,13 +4,14 @@ class Vim < Formula
   # *** Vim should be updated no more than once every 7 days ***
   url "https://github.com/vim/vim/archive/v8.0.0134.tar.gz"
   sha256 "1b3e3e7d187eed55cbdb0a1dae6b8f3b885005fbae84222420877d7afa3b2310"
+  revision 1
 
   head "https://github.com/vim/vim.git"
 
   bottle do
-    sha256 "d332ed04e4f4361af5840cd9564c50c56a587efcbeb4468bde633c2a5099fca3" => :sierra
-    sha256 "069f6261fbb0c13a8bfd5f1cd20de99516da59dde0617e0a01e9f5b924701926" => :el_capitan
-    sha256 "3e449b49197bd5c604d88c4abbd3decff68be6b9581ce898e4146a21a930205d" => :yosemite
+    sha256 "caec3d60ca9eece6708a70352c6f06b2524c324f8de65feb9ae8e1bcd5310872" => :sierra
+    sha256 "b75d1bb57c6187d30310bc056ccb9cf86fc20820be003990faa6292f5bb56613" => :el_capitan
+    sha256 "4c7669f84a467217e9286068b97b80192a5520f5e9e98865770ae48c1f638f21" => :yosemite
   end
 
   deprecated_option "disable-nls" => "without-nls"
@@ -118,18 +119,13 @@ class Vim < Formula
   end
 
   test do
-    # Simple test to check if Vim was linked to Python version in $PATH
     if build.with? "python"
-      vim_path = bin/"vim"
-
-      # Get linked framework using otool
-      otool_output = `otool -L #{vim_path} | grep -m 1 Python`.gsub(/\(.*\)/, "").strip.chomp
-
-      # Expand the link and get the python exec path
-      vim_framework_path = Pathname.new(otool_output).realpath.dirname.to_s.chomp
-      system_framework_path = `python-config --exec-prefix`.chomp
-
-      assert_equal system_framework_path, vim_framework_path
+      (testpath/"commands.vim").write <<-EOS.undent
+        :python import vim; vim.current.buffer[0] = 'hello world'
+        :wq
+      EOS
+      system bin/"vim", "-T", "dumb", "-s", "commands.vim", "test.txt"
+      assert_equal (testpath/"test.txt").read, "hello world\n"
     end
   end
 end

@@ -1,14 +1,14 @@
 class Folly < Formula
   desc "Collection of reusable C++ library artifacts developed at Facebook"
   homepage "https://github.com/facebook/folly"
-  url "https://github.com/facebook/folly/archive/v2016.12.12.00.tar.gz"
-  sha256 "ea96682d14423506136edb51a0a761573f50814c1634eb06f1b5d1ea6038cb44"
+  url "https://github.com/facebook/folly/archive/v2016.12.19.00.tar.gz"
+  sha256 "471050ccd2a32f551eb11f43170d3f9cdd39d363ec026ca922b872d1c03831c1"
   head "https://github.com/facebook/folly.git"
 
   bottle do
     cellar :any
-    sha256 "eac9c0ff803ff2a0eff04df3c2a1bd0554ffbee531edba7842265f327d0f6bfe" => :sierra
-    sha256 "f8d93406a168817c5993a161dc82191ae1837e89f367eca95bbe7dae490a0581" => :el_capitan
+    sha256 "6691704bb853f2b55e1b966290396cdbc7eed28404fb90db6161c53d80bf2792" => :sierra
+    sha256 "b8d0d096e482ad1be63724026695d1cc0c69ae1a240753e3d1d02551400e9da3" => :el_capitan
   end
 
   depends_on "autoconf" => :build
@@ -55,10 +55,9 @@ class Folly < Formula
         inreplace "portability/Time.h", "typedef uint8_t clockid_t;", ""
       end
 
-      # Build system relies on pkg-config but gflags removed
-      # the .pc files so now folly cannot find without flags.
-      ENV["GFLAGS_CFLAGS"] = Formula["gflags"].opt_include
-      ENV["GFLAGS_LIBS"] = Formula["gflags"].opt_lib
+      # Fixes the .pc file, which references the gflags .pc under the wrong name.
+      # Applied upstream: https://github.com/facebook/folly/pull/531
+      inreplace "configure.ac", "[libgflags]", "[gflags]"
 
       system "autoreconf", "-fvi"
       system "./configure", "--prefix=#{prefix}", "--disable-silent-rules",

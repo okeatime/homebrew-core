@@ -43,7 +43,7 @@ class Pike < Formula
   def install
     args = ["--prefix=#{prefix}", "--without-bundles"]
 
-    if MacOS.prefer_64_bit? && !build.build_32_bit?
+    if MacOS.prefer_64_bit?
       ENV.append "CFLAGS", "-m64"
       args << "--with-abi=64"
     else
@@ -55,7 +55,7 @@ class Pike < Formula
       args << "--without-machine-code"
     end
 
-    ENV.j1
+    ENV.deparallelize
 
     system "make", "CONFIGUREARGS='" + args.join(" ") + "'"
 

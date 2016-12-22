@@ -5,14 +5,14 @@ class LibtorrentRasterbar < Formula
   sha256 "a865ceaca8b14acdd7be56d361ce4e64361299647e157ef7b3ac7e2812ca4c3e"
 
   bottle do
-    root_url "https://builds.shiki.hu/homebrew"
+    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :sierra
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :el_capitan
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :yosemite
   end
 
   head do
-    url "https://github.com/arvidn/libtorrent.git", :branch => "RC_1_0"
+    url "https://github.com/arvidn/libtorrent.git", :branch => "RC_1_1"
     depends_on "automake" => :build
     depends_on "autoconf" => :build
     depends_on "libtool" => :build
@@ -52,6 +52,8 @@ class LibtorrentRasterbar < Formula
     end
 
     system "./configure", *args
+    inreplace "src/Makefile", /^(libtorrent_rasterbar_la_LIBADD.*) -lssl.*/, "\\1"
+
     system "make", "-j4"
     system "make", "install"
     libexec.install "examples"

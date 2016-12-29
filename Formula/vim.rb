@@ -4,14 +4,14 @@ class Vim < Formula
   # *** Vim should be updated no more than once every 7 days ***
   url "https://github.com/vim/vim/archive/v8.0.0134.tar.gz"
   sha256 "1b3e3e7d187eed55cbdb0a1dae6b8f3b885005fbae84222420877d7afa3b2310"
-  revision 1
+  revision 2
 
   head "https://github.com/vim/vim.git"
 
   bottle do
-    sha256 "caec3d60ca9eece6708a70352c6f06b2524c324f8de65feb9ae8e1bcd5310872" => :sierra
-    sha256 "b75d1bb57c6187d30310bc056ccb9cf86fc20820be003990faa6292f5bb56613" => :el_capitan
-    sha256 "4c7669f84a467217e9286068b97b80192a5520f5e9e98865770ae48c1f638f21" => :yosemite
+    sha256 "9c5643317f422d838c48557552501216327b01bfca129e1bea42f26de986bd63" => :sierra
+    sha256 "ca5bbfb3fcff3fd5574857a2695202a2a4d5c05f661490c07222dd137f94ba2d" => :el_capitan
+    sha256 "375006abc4a6be7ce749ed62a90295a7f0dead812ea6ada97f96954ea873b25b" => :yosemite
   end
 
   deprecated_option "disable-nls" => "without-nls"

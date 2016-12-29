@@ -25,16 +25,15 @@ class Gcc < Formula
   head "svn://gcc.gnu.org/svn/gcc/trunk"
 
   stable do
-    url "https://ftpmirror.gnu.org/gcc/gcc-6.2.0/gcc-6.2.0.tar.bz2"
-    mirror "https://ftp.gnu.org/gnu/gcc/gcc-6.2.0/gcc-6.2.0.tar.bz2"
-    sha256 "9944589fc722d3e66308c0ce5257788ebd7872982a718aa2516123940671b7c5"
+    url "https://ftpmirror.gnu.org/gcc/gcc-6.3.0/gcc-6.3.0.tar.bz2"
+    mirror "https://ftp.gnu.org/gnu/gcc/gcc-6.3.0/gcc-6.3.0.tar.bz2"
+    sha256 "f06ae7f3f790fbf0f018f6d40e844451e6bc3b7bc96e128e63b09825c1f8b29f"
   end
 
   bottle do
-    rebuild 1
-    sha256 "8448a5bdf5c0a3f6667bbf6101aa2c566a9e129b3434d7a4ad459e2562b98595" => :sierra
-    sha256 "2ddb9a12a8746cfb1f5ae4a4186814214a1d279b223c3207df9e5829775ffb0c" => :el_capitan
-    sha256 "b547971effc06ec5700c0955959e4a5b5542ec11be23504de21eeb99eec1909a" => :yosemite
+    sha256 "3d677cf0585132cbf43be8efc6792ead8725f3d856d6b25476228ae1d70354ae" => :sierra
+    sha256 "3f091f53688eec06264c60c92a5dfb08c67cfd7f4adb3798af16e8d7b9cd44b9" => :el_capitan
+    sha256 "69f28c56ff22f5205b58d96f12d197cdaa6c65f3be402e6500f465688f143df5" => :yosemite
   end
 
   # GCC's Go compiler is not currently supported on macOS.

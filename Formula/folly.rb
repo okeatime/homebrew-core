@@ -3,12 +3,13 @@ class Folly < Formula
   homepage "https://github.com/facebook/folly"
   url "https://github.com/facebook/folly/archive/v2016.12.19.00.tar.gz"
   sha256 "471050ccd2a32f551eb11f43170d3f9cdd39d363ec026ca922b872d1c03831c1"
+  revision 2
   head "https://github.com/facebook/folly.git"
 
   bottle do
     cellar :any
-    sha256 "6691704bb853f2b55e1b966290396cdbc7eed28404fb90db6161c53d80bf2792" => :sierra
-    sha256 "b8d0d096e482ad1be63724026695d1cc0c69ae1a240753e3d1d02551400e9da3" => :el_capitan
+    sha256 "fe04002d10ee7326c94cdfff4f49a3b9d1f4945c13918fe619bd6c41d5ed8270" => :sierra
+    sha256 "238b58d04aeede0583275fe4d0df72cfc252aae2d6edfd52da2f31fd29be6222" => :el_capitan
   end
 
   depends_on "autoconf" => :build
@@ -23,7 +24,6 @@ class Folly < Formula
   depends_on "xz"
   depends_on "snappy"
   depends_on "lz4"
-  depends_on "jemalloc"
   depends_on "openssl"
 
   # https://github.com/facebook/folly/issues/451
@@ -61,8 +61,7 @@ class Folly < Formula
 
       system "autoreconf", "-fvi"
       system "./configure", "--prefix=#{prefix}", "--disable-silent-rules",
-                            "--disable-dependency-tracking",
-                            "--with-jemalloc"
+                            "--disable-dependency-tracking"
       system "make"
       system "make", "install"
     end

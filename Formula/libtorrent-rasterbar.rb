@@ -31,6 +31,7 @@ class LibtorrentRasterbar < Formula
             "--disable-silent-rules",
             "--enable-encryption",
             "--prefix=#{prefix}",
+            "--with-openssl=#{Formula["openssl"].opt_prefix}",
             "--with-boost=#{Formula["boost"].opt_prefix}"]
 
     #Enable C++11
@@ -48,12 +49,13 @@ class LibtorrentRasterbar < Formula
     end
 
     if build.head?
+      inreplace "src/Makefile.am", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
       system "./autotool.sh", *args
+    else
+      inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
     end
 
     system "./configure", *args
-    inreplace "src/Makefile", /^(libtorrent_rasterbar_la_LIBADD.*) -lssl.*/, "\\1"
-
     system "make", "-j4"
     system "make", "install"
     libexec.install "examples"

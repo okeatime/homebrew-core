@@ -30,6 +30,7 @@ class Boost < Formula
     depends_on "icu4c" => :optional
     depends_on :mpi => [:cc, :cxx, :optional]
   end
+  depends_on "openssl"
 
   needs :cxx11 if build.cxx11?
 
@@ -102,6 +103,7 @@ class Boost < Formula
         args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
       end
     end
+    args << "linkflags=\"-L#{Formula["openssl"].opt_prefix}/lib -lssl -lcrypto\""
 
     system "./bootstrap.sh", *bootstrap_args
     system "./b2", "headers"

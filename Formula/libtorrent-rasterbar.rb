@@ -49,11 +49,10 @@ class LibtorrentRasterbar < Formula
     end
 
     if build.head?
-      inreplace "src/Makefile.am", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
       system "./autotool.sh", *args
-    else
-      inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
     end
+
+    inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
 
     system "./configure", *args
     system "make", "-j4"

@@ -3,11 +3,12 @@ class GnomeBuilder < Formula
   homepage "https://wiki.gnome.org/Apps/Builder"
   url "https://download.gnome.org/sources/gnome-builder/3.22/gnome-builder-3.22.4.tar.xz"
   sha256 "d569446a83ab88872c265f238f8f42b5928a6b3eebb22fd1db3dbc0dd9128795"
+  revision 1
 
   bottle do
-    sha256 "32b73e0764bc01b84d90c30a2cb374024940699617f90345c74efd1225aa0c43" => :sierra
-    sha256 "8b7827ee01ac7ddd81565909e60db7b02809a312ba08e5af7cab4d93dad603ff" => :el_capitan
-    sha256 "5e8a7a21d42ea64721911449e9942f00b61211f20b48ff82b56323a75ab4d2a4" => :yosemite
+    sha256 "9696ce453f8388bf34a2bfb0259634accc017a505a46354829a6de1c651eaafa" => :sierra
+    sha256 "780097cac9ca5f467816c33bd1cec41d805bcb01633e15c0d0fb6a9d927e309d" => :el_capitan
+    sha256 "c16df3dd5f759fae32ed0e28c3f10ec5775bf0668f25e472f917d6dc0010dfc1" => :yosemite
   end
 
   depends_on "pkg-config" => :build
@@ -34,6 +35,8 @@ class GnomeBuilder < Formula
   needs :cxx11
 
   def install
+    ENV.prepend_path "PKG_CONFIG_PATH", Formula["libgit2-glib"].opt_libexec/"libgit2/lib/pkgconfig"
+
     ENV.cxx11
 
     system "./configure", "--disable-debug",

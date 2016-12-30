@@ -3,14 +3,14 @@ class Mitmproxy < Formula
 
   desc "Intercept, modify, replay, save HTTP/S traffic"
   homepage "https://mitmproxy.org"
-  url "https://github.com/mitmproxy/mitmproxy/archive/v1.0.1.tar.gz"
-  sha256 "fa1494773b7186c7119e39a9f8812f7f9144ec82a0917ae567b0c962f45d6851"
+  url "https://github.com/mitmproxy/mitmproxy/archive/v1.0.2.tar.gz"
+  sha256 "0458b4ad3cedbc238decc7d736e693cd220c7977592b57052e181d404e1152b4"
   head "https://github.com/mitmproxy/mitmproxy.git"
 
   bottle do
-    sha256 "47711f782e17db9c02ed7c948a777936b490c10424a3623621270c9f2d0b4f0e" => :sierra
-    sha256 "eba9fa3be2bca122cf30d43c25d966963d0efa2e07e8c063ba007e674f0f14b6" => :el_capitan
-    sha256 "3e3014c3db195632f2ebe186c8d2aeaaf98205eca0b795138f4e2ac6b456235c" => :yosemite
+    sha256 "ff3bf4cc87211c6f0948435aedd440c70e35f39a2eb1b595447da91710b7cd65" => :sierra
+    sha256 "80cafefb38dbca6c2871ab56c83e143a7505a72b4e882dd8e5b7e1f741ec8b55" => :el_capitan
+    sha256 "de6027e10d8d9250a4950191ee0ef048e73c68557d7e93fe9a11d8705e293d57" => :yosemite
   end
 
   option "with-pyamf", "Enable action message format (AMF) support for python"
@@ -112,8 +112,8 @@ class Mitmproxy < Formula
   end
 
   resource "ruamel.yaml" do
-    url "https://files.pythonhosted.org/packages/21/38/9503e0dfb0fbf5f08547c94bbe869f00c3370d6b63efaf31165bc4e5b20e/ruamel.yaml-0.13.5.tar.gz"
-    sha256 "1f3cd32201d7a0014f491e03f3e4482fe0883521d109962d9b757541b93be7d6"
+    url "https://files.pythonhosted.org/packages/e0/f0/4eeb3183f50df3dfa9b1d931c09c98cd0ad48684407a7ee7bdc5b54360f2/ruamel.yaml-0.13.7.tar.gz"
+    sha256 "f0fc12dea33b08c1d5b546857e428de98ebb9b5b2b3c5d53867582294a118aed"
   end
 
   resource "tornado" do
@@ -182,8 +182,8 @@ class Mitmproxy < Formula
   end
 
   resource "Werkzeug" do
-    url "https://files.pythonhosted.org/packages/43/2e/d822b4a4216804519ace92e0368dcfc4b0b2887462d852fdd476b253ecc9/Werkzeug-0.11.11.tar.gz"
-    sha256 "e72c46bc14405cba7a26bd2ce28df734471bc9016bc8b4cb69466c2c14c2f7e5"
+    url "https://files.pythonhosted.org/packages/4a/4a/0e5f691c1e00d8b5678f35225cfc9e21dcebec794fb9702648b8fac716b1/Werkzeug-0.11.13.zip"
+    sha256 "ebf720bc2f0ac7739ee2d6de63da8a323d73d91fddc16f5fadae915ae9e1e690"
   end
 
   resource "itsdangerous" do
@@ -229,13 +229,28 @@ class Mitmproxy < Formula
         s.gsub! "FREETYPE_ROOT = None", "FREETYPE_ROOT = ('#{Formula["freetype"].opt_prefix}/lib', '#{Formula["freetype"].opt_prefix}/include')"
       end
 
-      # avoid triggering "helpful" distutils code that doesn't recognize Xcode 7 .tbd stubs
-      ENV.delete "SDKROOT"
-      ENV.append "CFLAGS", "-I#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Versions/8.5/Headers" unless MacOS::CLT.installed?
+      begin
+        # avoid triggering "helpful" distutils code that doesn't recognize Xcode 7 .tbd stubs
+        deleted = ENV.delete "SDKROOT"
+        ENV.append "CFLAGS", "-I#{MacOS.sdk_path}/System/Library/Frameworks/Tk.framework/Versions/8.5/Headers" unless MacOS::CLT.installed?
+        venv.pip_install Pathname.pwd
+      ensure
+        ENV["SDKROOT"] = deleted
+      end
+    end
+
+    resource("cryptography").stage do
+      if MacOS.version < :sierra
+        # Fixes .../cryptography/hazmat/bindings/_openssl.so: Symbol not found: _getentropy
+        # Reported 20 Dec 2016 https://github.com/pyca/cryptography/issues/3332
+        inreplace "src/_cffi_src/openssl/src/osrandom_engine.h",
+          "#elif defined(BSD) && defined(SYS_getentropy)",
+          "#elif defined(BSD) && defined(SYS_getentropy) && 0"
+      end
       venv.pip_install Pathname.pwd
     end
 
-    res = resources.map(&:name).to_set - ["Pillow"]
+    res = resources.map(&:name).to_set - ["Pillow", "cryptography"]
 
     res.each do |r|
       venv.pip_install resource(r)

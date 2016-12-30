@@ -1,8 +1,12 @@
 class LibtorrentRasterbar < Formula
   desc "C++ bittorrent library by Rasterbar Software"
   homepage "http://www.libtorrent.org/"
+#  url "https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_1/libtorrent-rasterbar-1.1.1.tar.gz"
+#  sha256 "f70c82367b0980460ef95aff3e117fd4a174477892d529beec434f74d615b31f"
   url "https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_10/libtorrent-rasterbar-1.0.10.tar.gz"
   sha256 "a865ceaca8b14acdd7be56d361ce4e64361299647e157ef7b3ac7e2812ca4c3e"
+#  url "https://github.com/okeatime/libtorrent/releases/download/libtorrent-1_1_2/libtorrent-rasterbar-1.1.2.tar.gz"
+#  sha256 "4daac41e93063e50b9340116743af6eaa63ce77e6d886fc0970a281e268d4290"
 
   bottle do
     root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
@@ -35,8 +39,8 @@ class LibtorrentRasterbar < Formula
             "--with-boost=#{Formula["boost"].opt_prefix}"]
 
     #Enable C++11
-#    args << "CXXFLAGS=-std=c++11"
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
+    args << "CXXFLAGS=-std=c++11"
+#    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
 
     # Build python bindings requires forcing usage of the mt version of boost_python.
     if build.with? "python"
@@ -50,10 +54,11 @@ class LibtorrentRasterbar < Formula
     end
 
     if build.head?
-      system "./autotool.sh", *args
     end
 
+    system "./autotool.sh"
     inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
+#    inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD.*)(@OPENSSL_LIBS@)/, "\\1"
 
     system "./configure", *args
     system "make", "-j4"

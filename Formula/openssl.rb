@@ -43,7 +43,7 @@ class Openssl < Formula
   end
 
   def install
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.5"
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
 
     # OpenSSL will prefer the PERL environment variable if set over $PATH
     # which can cause some odd edge cases & isn't intended. Unset for safety.

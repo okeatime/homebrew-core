@@ -136,7 +136,7 @@ class Qt5 < Formula
     openssl_opt = Formula["openssl"].opt_prefix
     args << "-I#{openssl_opt}/include"
     ENV["OPENSSL_LIBS"] = "-L#{openssl_opt}/lib -lssl -lcrypto"
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.5"
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
 
     args << "-nomake" << "examples" if build.without? "examples"
 

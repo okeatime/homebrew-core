@@ -103,7 +103,7 @@ class Boost < Formula
         args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
       end
     end
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.5"
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
 
     system "./bootstrap.sh", *bootstrap_args
     system "./b2", "headers"

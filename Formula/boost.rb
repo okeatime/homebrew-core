@@ -103,7 +103,7 @@ class Boost < Formula
         args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
       end
     end
-    args << "linkflags=\"-L#{Formula["openssl"].opt_prefix}/lib -lssl -lcrypto\""
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.5"
 
     system "./bootstrap.sh", *bootstrap_args
     system "./b2", "headers"

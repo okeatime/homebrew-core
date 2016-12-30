@@ -36,6 +36,7 @@ class LibtorrentRasterbar < Formula
 
     #Enable C++11
     args << "CXXFLAGS=-std=c++11"
+    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.5"
 
     # Build python bindings requires forcing usage of the mt version of boost_python.
     if build.with? "python"

@@ -17,8 +17,8 @@ class Qt5 < Formula
   end
 
   bottle do
-    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball"
-    sha256 "c8c73d777dea4f1ad896828ed8bb236e1c360707304316d7b10bc2e21686bca6" => :sierra
+    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
+    sha256 "e71636f094428483f7c577852c8f1af97115269a20e21fb45739b34b7f070849" => :sierra
     sha256 "2ecd12f551e720e072d6c04a41ccd38a01645f4835531f8125164dd620c121cb" => :el_capitan
     sha256 "0495b22126f33308435ee3118d263a85528dc96353b8ba2ccadaed03295e952b" => :yosemite
   end

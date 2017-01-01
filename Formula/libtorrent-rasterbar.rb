@@ -10,7 +10,7 @@ class LibtorrentRasterbar < Formula
 
   bottle do
     root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
-    sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :sierra
+    sha256 "64251678019e21109c3423e9399135e681d25b5e8605bd103650f78ee3164e0c" => :sierra
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :el_capitan
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :yosemite
   end
@@ -54,9 +54,9 @@ class LibtorrentRasterbar < Formula
     end
 
     if build.head?
+      system "./autotool.sh"
     end
 
-    system "./autotool.sh"
     inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD)(.*)(@OPENSSL_LIBS@)/, "\\1\\2@OPENSSL_LDFLAGS@ \\3"
 #    inreplace "src/Makefile.in", /^(libtorrent_rasterbar_la_LIBADD.*)(@OPENSSL_LIBS@)/, "\\1"
 

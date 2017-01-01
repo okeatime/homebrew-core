@@ -8,6 +8,7 @@ class Qt5 < Formula
   sha256 "46ebca977deb629c5e69c2545bc5fe13f7e40012e5e2e451695c583bd33502fa"
   head "https://code.qt.io/qt/qt5.git", :branch => "5.7", :shallow => false
 
+  stable do
     # macdeployqt bug fix
     patch do
       url "https://gist.githubusercontent.com/okeatime/dc2f7dabd9321e8b57cdb27a096e4058/raw/72dc3618423b1e9876d3d4b94412f977b9a2f33e/macdeployqt.patch"
@@ -16,7 +17,7 @@ class Qt5 < Formula
   end
 
   bottle do
-    root_url "https://builds.shiki.hu/homebrew"
+    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball"
     sha256 "c8c73d777dea4f1ad896828ed8bb236e1c360707304316d7b10bc2e21686bca6" => :sierra
     sha256 "2ecd12f551e720e072d6c04a41ccd38a01645f4835531f8125164dd620c121cb" => :el_capitan
     sha256 "0495b22126f33308435ee3118d263a85528dc96353b8ba2ccadaed03295e952b" => :yosemite

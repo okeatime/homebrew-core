@@ -21,6 +21,7 @@ class Gcc < Formula
 
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org"
+  revision 1
 
   head "svn://gcc.gnu.org/svn/gcc/trunk"
 
@@ -31,9 +32,9 @@ class Gcc < Formula
   end
 
   bottle do
-    sha256 "3d677cf0585132cbf43be8efc6792ead8725f3d856d6b25476228ae1d70354ae" => :sierra
-    sha256 "3f091f53688eec06264c60c92a5dfb08c67cfd7f4adb3798af16e8d7b9cd44b9" => :el_capitan
-    sha256 "69f28c56ff22f5205b58d96f12d197cdaa6c65f3be402e6500f465688f143df5" => :yosemite
+    sha256 "9a05a75102206bfb3e37ff60b822421dd73c4a14b67f7acb258054317fd0f5ca" => :sierra
+    sha256 "c76a4b7294e41e410d37cd45d9c2f820c55001a7cfa82b71ac81d6a0051de5f4" => :el_capitan
+    sha256 "807d107ada2e8774a5bf1461d3f8dc636d1135bdfde5a64f03ccabc063a11328" => :yosemite
   end
 
   # GCC's Go compiler is not currently supported on macOS.
@@ -111,6 +112,11 @@ class Gcc < Formula
 
     languages -= ["java"] if build.head?
 
+    # Even when suffixes are appended, the info pages conflict when
+    # install-info is run so pretend we have an outdated makeinfo
+    # to prevent their build.
+    ENV["gcc_cv_prog_makeinfo_modern"] = "no"
+
     args = [
       "--build=#{arch}-apple-darwin#{osmajor}",
       "--prefix=#{prefix}",
@@ -133,9 +139,6 @@ class Gcc < Formula
       "--disable-werror",
       "--with-pkgversion=Homebrew GCC #{pkg_version} #{build.used_options*" "}".strip,
       "--with-bugurl=https://github.com/Homebrew/homebrew-core/issues",
-      # Even when suffixes are appended, the info pages conflict when
-      # install-info is run.
-      "MAKEINFO=missing",
     ]
 
     # "Building GCC with plugin support requires a host that supports
@@ -186,6 +189,8 @@ class Gcc < Formula
     # with system compilers.
     # Rename man7.
     Dir.glob(man7/"*.7") { |file| add_suffix file, version_suffix }
+    # Even when we disable building info pages some are still installed.
+    info.rmtree
   end
 
   def add_suffix(file, suffix)

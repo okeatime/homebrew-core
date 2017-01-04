@@ -6,6 +6,7 @@ class Qt5 < Formula
   url "https://download.qt.io/official_releases/qt/5.7/5.7.1/single/qt-everywhere-opensource-src-5.7.1.tar.xz"
   mirror "https://www.mirrorservice.org/sites/download.qt-project.org/official_releases/qt/5.7/5.7.1/single/qt-everywhere-opensource-src-5.7.1.tar.xz"
   sha256 "46ebca977deb629c5e69c2545bc5fe13f7e40012e5e2e451695c583bd33502fa"
+  revision 1
   head "https://code.qt.io/qt/qt5.git", :branch => "5.7", :shallow => false
 
   stable do
@@ -22,6 +23,8 @@ class Qt5 < Formula
     sha256 "6a9e7e441e40d6b4b113819758dd4ec39ffda0d0b10b728fc282acb0c7a5f64f" => :el_capitan
     sha256 "0495b22126f33308435ee3118d263a85528dc96353b8ba2ccadaed03295e952b" => :yosemite
   end
+
+  keg_only "Qt 5 has CMake issues when linked"
 
   option "with-docs", "Build documentation"
   option "with-examples", "Build examples"

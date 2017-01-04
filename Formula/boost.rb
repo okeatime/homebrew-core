@@ -30,7 +30,7 @@ class Boost < Formula
     depends_on "icu4c" => :optional
     depends_on :mpi => [:cc, :cxx, :optional]
   end
-  depends_on "openssl"
+#  depends_on "openssl"
 
   needs :cxx11 if build.cxx11?
 
@@ -103,7 +103,7 @@ class Boost < Formula
         args << "cxxflags=-stdlib=libc++" << "linkflags=-stdlib=libc++"
       end
     end
-    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
+#    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
 
     system "./bootstrap.sh", *bootstrap_args
     system "./b2", "headers"

@@ -11,7 +11,7 @@ class LibtorrentRasterbar < Formula
   bottle do
     root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
     sha256 "64251678019e21109c3423e9399135e681d25b5e8605bd103650f78ee3164e0c" => :sierra
-    sha256 "429c26b46a5d0b107c4c982d0f5bdc3f1fea4126c2154da87dc4dc6858c51f60" => :el_capitan
+    sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :el_capitan
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :yosemite
   end
 
@@ -39,7 +39,7 @@ class LibtorrentRasterbar < Formula
             "--with-boost=#{Formula["boost"].opt_prefix}"]
 
     #Enable C++11
-    args << "CXXFLAGS=-std=c++11"
+#    args << "CXXFLAGS=-std=c++11"
 #    ENV["MACOSX_DEPLOYMENT_TARGET"] = "10.7"
 
     # Build python bindings requires forcing usage of the mt version of boost_python.

@@ -19,7 +19,7 @@ class Qt5 < Formula
   bottle do
     root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
     sha256 "e71636f094428483f7c577852c8f1af97115269a20e21fb45739b34b7f070849" => :sierra
-    sha256 "9dd523f9f5dd07c890874be7e1561e19b35ee260733dfb41eb4711559a791951" => :el_capitan
+    sha256 "6a9e7e441e40d6b4b113819758dd4ec39ffda0d0b10b728fc282acb0c7a5f64f" => :el_capitan
     sha256 "0495b22126f33308435ee3118d263a85528dc96353b8ba2ccadaed03295e952b" => :yosemite
   end
 

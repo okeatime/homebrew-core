@@ -12,13 +12,13 @@ class Qt5 < Formula
   stable do
     # macdeployqt bug fix
     patch do
-      url "https://gist.githubusercontent.com/okeatime/dc2f7dabd9321e8b57cdb27a096e4058/raw/72dc3618423b1e9876d3d4b94412f977b9a2f33e/macdeployqt.patch"
+      url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/macdeployqt.patch"
       sha256 "afe0fa9fb88ee06c4df3338ff81a204e0c0840c9b116cd3c99ee1d7ea195dba4"
     end
   end
 
   bottle do
-    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
+    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball"
     sha256 "e71636f094428483f7c577852c8f1af97115269a20e21fb45739b34b7f070849" => :sierra
     sha256 "6a9e7e441e40d6b4b113819758dd4ec39ffda0d0b10b728fc282acb0c7a5f64f" => :el_capitan
     sha256 "0495b22126f33308435ee3118d263a85528dc96353b8ba2ccadaed03295e952b" => :yosemite

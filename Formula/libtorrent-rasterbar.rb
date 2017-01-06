@@ -9,7 +9,7 @@ class LibtorrentRasterbar < Formula
 #  sha256 "4daac41e93063e50b9340116743af6eaa63ce77e6d886fc0970a281e268d4290"
 
   bottle do
-    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball/"
+    root_url "https://github.com/okeatime/qBittorrent/releases/download/depend.tar.ball"
     sha256 "64251678019e21109c3423e9399135e681d25b5e8605bd103650f78ee3164e0c" => :sierra
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :el_capitan
     sha256 "cecada444ad372924a53792f93853f6933337e6e429e8b6c198a3cf7e6ef964f" => :yosemite
